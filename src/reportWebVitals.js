@@ -9,5 +9,5 @@ const reportWebVitals = onPerfEntry => {
     });
   }
 };
-
+// 利用web-vitals这里库来检测性能
 export default reportWebVitals;
