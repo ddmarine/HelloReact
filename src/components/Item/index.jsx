@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './index.css'
 
+
 class Item extends Component {
 	//这样写，会不经任何操作，直接输出，不对
 	// handleMouse = (flag) =>{
@@ -15,12 +16,24 @@ class Item extends Component {
 	// }
 
 	//这样可以把鼠标状态储存起来
-	state = {mouse:false}
+	state = {mouse:false}  // 标识鼠标移入、移出
 
+
+	// 鼠标移入、移出的回调
 	handleMouse = (flag) => {
 		return ()=>{
 			this.setState({mouse:flag})
 			console.log(this.state.mouse)
+		}
+	}
+
+	//勾选、取消某一个todo的回调
+	handleCheck = (id) => {
+		return (event)=>{
+			console.log(id, event.target.checked)
+			console.log(this.props)
+			this.props.updateTodo(id,event.target.checked)
+			//this.props.updateTodo()
 		}
 	}
 
@@ -34,10 +47,10 @@ class Item extends Component {
 					{/* 这样写是不能修改的 ，要加上onchange*/}
 					{/* <input type="checkbox" checked={done}/> */}
 					{/* 这样可以 */}
-					<input type="checkbox" defaultChecked={done}/>
+					<input type="checkbox" defaultChecked={done} onChange={this.handleCheck(id)}/>
 					<span>{name}</span>
 				</label>
-				<button className="btn btn-danger" style={{display:mouse?'block':'none'}}>删除</button>
+				<button onClick={this.handleDelete} className="btn btn-danger" style={{display:mouse?'block':'none'}}>删除</button>
 			</li>
 		)
 	}
