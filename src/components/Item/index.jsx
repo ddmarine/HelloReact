@@ -23,7 +23,7 @@ class Item extends Component {
 	handleMouse = (flag) => {
 		return ()=>{
 			this.setState({mouse:flag})
-			console.log(this.state.mouse)
+			//console.log(this.state.mouse)
 		}
 	}
 
@@ -37,6 +37,14 @@ class Item extends Component {
 		}
 	}
 
+	handleDelete = (id) => {
+		console.log('通知App删除', id)
+
+		if(window.confirm('确定删除吗？')) {
+			this.props.deleteTodo(id)
+		}
+	}
+
 	render() {
 		const {id,name,done} = this.props
 		const {mouse} = this.state
@@ -47,10 +55,10 @@ class Item extends Component {
 					{/* 这样写是不能修改的 ，要加上onchange*/}
 					{/* <input type="checkbox" checked={done}/> */}
 					{/* 这样可以 */}
-					<input type="checkbox" defaultChecked={done} onChange={this.handleCheck(id)}/>
+					<input type="checkbox" checked={done} onChange={this.handleCheck(id)}/>
 					<span>{name}</span>
 				</label>
-				<button onClick={this.handleDelete} className="btn btn-danger" style={{display:mouse?'block':'none'}}>删除</button>
+				<button onClick={()=>{this.handleDelete(id)}} className="btn btn-danger" style={{display:mouse?'block':'none'}}>删除</button>
 			</li>
 		)
 	}
