@@ -9,6 +9,14 @@
 			let obj = {a:1,b:2}
 			let obj2 = {...obj, b:3}
 			console.log(obj2)
+
+			let obj3 = {a:{b:{c:1}}}
+			const {a:{b:{c}}} = obj3
+			console.log(c)
+
+			let obj4 = {a:{b:1}}
+			const {a:{b:data}} = obj4
+			console.log(data)
 		</script>
 	</body>
 </html>
