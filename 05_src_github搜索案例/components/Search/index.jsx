@@ -4,10 +4,6 @@ import axios from 'axios'
 class Search extends Component {
 
 	search = ()=>{
-		console.log('search组件发布消息了')
-		PubSub.publish('jb',{isFirst:false, isLoading:true})
-
-
 		// 获取用户的输入
 		console.log(this.keyWordElement.value)
 		// 也可以这样写
@@ -15,18 +11,26 @@ class Search extends Component {
 		console.log(keyWord)
 
 		// 发送请求前通知App更新状态
-		// this.props.updateAppState({isFirst:false, isLoading:true})
+		this.props.updateAppState({isFirst:false, isLoading:true})
 		// 发送网络请求
 		axios.get(`https://api.github.com/search/users?q=${keyWord}`).then(
 			response => {
+				console.log('成功了', response.data)
 				// 请求成功后通知App更新状态
-				PubSub.publish('jb',{isLoading:false, users:response.data.items})
+				this.props.updateAppState({isLoading:false, users:response.data.items})
 			},
 			error => {
+				console.log('失败',error)
 				// 请求失败后通知App更新状态
-				PubSub.publish('jb',{isLoading:false, err:error.message})
+				this.props.updateAppState({isLoading:false, err:error.message})
 			}
 		)
+
+		// axios.get(`http://localhost:3000/api1/search/users2?q=${keyWord}`).then(
+		// 	response => {console.log('成功了', response.data)},
+		// 	error => {console.log('失败',error)}
+		// )
+
 	}
 
 	render() {
